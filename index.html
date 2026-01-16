@@ -2,64 +2,198 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Image Generator (No API Key)</title>
+<title>AI Code Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
+/* OSTIGUYTECH STYLE */
 body {
-    background:#0b0b0c;
-    color:white;
-    font-family:Arial;
-    text-align:center;
-    padding:40px;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0b0c0f;
+  color: #e5e7eb;
 }
-input, button {
-    padding:12px;
-    width:80%;
-    margin-top:10px;
-    font-size:16px;
+
+header {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #1f2937;
+  background: #020617;
 }
+
+header h1 {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+header p {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+/* LAYOUT */
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: #020617;
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* FORM */
+label {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+textarea, select {
+  width: 100%;
+  background: #0b0c0f;
+  border: 1px solid #1f2937;
+  color: #e5e7eb;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
 button {
-    background:#6a5acd;
-    color:white;
-    border:none;
-    cursor:pointer;
+  margin-top: 14px;
+  background: #2563eb;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
 }
-img {
-    margin-top:30px;
-    max-width:90%;
-    border-radius:12px;
+
+button:hover {
+  background: #1d4ed8;
+}
+
+/* OUTPUT */
+.output {
+  background: #000;
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  padding: 14px;
+  font-family: monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+  min-height: 120px;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 12px;
+  font-size: 12px;
+  color: #9ca3af;
+  border-top: 1px solid #1f2937;
+  background: #020617;
 }
 </style>
 </head>
 <body>
 
-<h1>Image Generator (No API Key)</h1>
+<header>
+  <h1>AI Code Generator</h1>
+  <p>Generate HTML, CSS, JavaScript & ideas instantly</p>
+</header>
 
-<input id="prompt" placeholder="Describe the image you want..." />
-<br>
-<button onclick="generate()">Generate</button>
+<div class="container">
 
-<div id="result"></div>
+  <div class="card">
+    <label>What do you want to generate?</label>
+    <textarea id="prompt" placeholder="Example: Create a modern login page with dark mode..."></textarea>
+
+    <label style="margin-top:12px; display:block;">Output type</label>
+    <select id="type">
+      <option value="html">HTML Page</option>
+      <option value="css">CSS Styles</option>
+      <option value="js">JavaScript Logic</option>
+      <option value="idea">Concept / Idea</option>
+    </select>
+
+    <button onclick="generate()">Generate</button>
+  </div>
+
+  <div class="card">
+    <label>Generated result</label>
+    <div class="output" id="output">
+Waiting for input…
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 Ostiguy Tech — AI-assisted generation platform
+</footer>
 
 <script>
 function generate() {
-    const prompt = document.getElementById("prompt").value;
-    const result = document.getElementById("result");
+  const prompt = document.getElementById("prompt").value.trim();
+  const type = document.getElementById("type").value;
+  const output = document.getElementById("output");
 
-    if (!prompt) {
-        result.innerHTML = "Please enter a prompt.";
-        return;
-    }
+  if (!prompt) {
+    output.textContent = "Please describe what you want to generate.";
+    return;
+  }
 
-    // Simulated AI result using Unsplash
-    const encodedPrompt = encodeURIComponent(prompt);
+  // DEMO AI RESPONSE (offline simulation)
+  let result = "";
 
-    const imageUrl = 
-        "https://source.unsplash.com/1024x1024/?" + encodedPrompt;
+  if (type === "html") {
+    result = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Generated Page</title>
+</head>
+<body>
+  <h1>${prompt}</h1>
+  <p>This HTML structure was generated automatically.</p>
+</body>
+</html>`;
+  }
 
-    result.innerHTML = `
-        <p><b>Prompt:</b> ${prompt}</p>
-        <img src="${imageUrl}">
-    `;
+  if (type === "css") {
+    result = `body {
+  background: #0b0c0f;
+  color: white;
+  font-family: system-ui;
+}`;
+  }
+
+  if (type === "js") {
+    result = `console.log("Generated logic for: ${prompt}");`;
+  }
+
+  if (type === "idea") {
+    result = `Concept:
+${prompt}
+
+• Target users
+• Core features
+• Monetization ideas
+• Security & performance notes`;
+  }
+
+  output.textContent = result;
 }
 </script>
 
